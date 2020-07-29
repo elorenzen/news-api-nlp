@@ -4,7 +4,7 @@
     <div v-for="item in data" :key="item.id">
         <h4>{{ item.title }}</h4>
         <small>{{ item.author }} - {{ item.publishedAt }}</small>
-        <p>{{ item.content }}</p>
+        <p>{{ item.description }}</p>
     </div>
   </div>
 </template>
