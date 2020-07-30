@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <div class="q-pa-md row items-start q-gutter-md">
+    <div class="q-pa-md q-mx-xl row items-start q-gutter-md">
         <q-card class="my-card" flat bordered v-for="item in data" :key="item.id">
             <q-card-section horizontal>
-                <q-card-section class="q-pt-xs">
-                    <div class="text-overline">{{ item.author }}</div>
-                    <div class="text-h5 q-mt-sm q-mb-xs">{{ item.title }}</div>
-                    <div class="text-caption text-grey">{{ item.description }}</div>
-                </q-card-section>
-
                 <q-card-section class="col-5 flex flex-center">
                     <q-img
                         class="rounded-borders"
                         :src="item.urlToImage"
                     />
+                </q-card-section>
+
+                <q-card-section class="q-pt-xs">
+                    <div class="text-overline">{{ item.author }}</div>
+                        <div class="text-h6 q-mt-sm q-mb-xs">
+                            <a :href="item.url" target="_blank" class="text-red-4 link" style="text-decoration: none">{{ item.title }}</a>
+                        </div>
+                    <div class="text-caption text-grey">{{ item.description }}</div>
                 </q-card-section>
             </q-card-section>
         </q-card>
@@ -48,5 +50,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.link:hover {
+  color: red
 }
 </style>
