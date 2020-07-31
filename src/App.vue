@@ -34,18 +34,26 @@
                     </q-card-section>
                 </q-card-section>
 
-                <q-card-section horizontal>
-                    <q-card-section class="q-pt-xs">
-                        <q-knob
-                            show-value
-                            class="text-light-blue q-ma-md"
-                            :value="calculateSentiment(item)"
-                            size="50px"
-                            color="light-blue"
-                        >
-                            {{ calculateSentiment(item) }}%
-                        </q-knob>
-                    </q-card-section>                    
+                <q-card-section horizontal class="q-pa-xl">
+                    <q-card class="bg-grey-3 rounded-borders">
+                        <q-card-section horizontal>
+                            <q-card-section class="q-pt-xs">
+                                Sentiment analysis: 
+                            </q-card-section>
+
+                            <q-card-section class="q-pt-xs col-4">
+                                <q-knob
+                                    show-value
+                                    class="text-light-blue q-ma-md"
+                                    :value="calculateSentiment(item)"
+                                    size="60px"
+                                    color="light-blue"
+                                >
+                                    {{ calculateSentiment(item) }}%
+                                </q-knob>
+                            </q-card-section>
+                        </q-card-section>
+                    </q-card>                 
                 </q-card-section>
             </q-card>
         </div>
@@ -78,7 +86,7 @@ export default {
       if (item.content !== null) {
         console.log(item.content)
         console.log(sentiment.analyze(item.content))
-        return (sentiment.analyze(item.content).comparative * 100)
+        return ((sentiment.analyze(item.content).comparative).toFixed(2) * 100)
       }
     }
   },
