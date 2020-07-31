@@ -33,6 +33,20 @@
                         <div class="text-caption text-grey">{{ item.description }}</div>
                     </q-card-section>
                 </q-card-section>
+
+                <q-card-section horizontal>
+                    <q-card-section class="q-pt-xs">
+                        <q-knob
+                            show-value
+                            class="text-light-blue q-ma-md"
+                            :value="calculateSentiment(item)"
+                            size="50px"
+                            color="light-blue"
+                        >
+                            {{ calculateSentiment(item) }}%
+                        </q-knob>
+                    </q-card-section>                    
+                </q-card-section>
             </q-card>
         </div>
     </div>
@@ -41,13 +55,16 @@
 <script>
 const apiKey = '290befad42ad4ee99ddf698aeea1f543'
 const axios = require('axios')
+const Sentiment = require('sentiment')
+const sentiment = new Sentiment()
 
 export default {
   name: 'App',
   data () {
     return {
       data: null,
-      search: ''
+      search: '',
+      value: 55
     }
   },
   methods: {
@@ -56,6 +73,13 @@ export default {
       let search = this.search
 
       axios.get(`https://newsapi.org/v2/everything?q=${search}&apiKey=${key}`).then(response => this.data = response.data.articles) 
+    },
+    calculateSentiment (item) {
+      if (item.content !== null) {
+        console.log(item.content)
+        console.log(sentiment.analyze(item.content))
+        return (sentiment.analyze(item.content).comparative * 100)
+      }
     }
   },
   mounted () {
