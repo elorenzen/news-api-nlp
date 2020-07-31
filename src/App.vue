@@ -1,26 +1,41 @@
 <template>
-  <div id="app">
-    <div class="q-pa-md q-mx-xl row items-start q-gutter-md">
-        <q-card class="my-card" flat bordered v-for="item in data" :key="item.id">
-            <q-card-section horizontal>
-                <q-card-section class="col-5 flex flex-center">
-                    <q-img
-                        class="rounded-borders"
-                        :src="item.urlToImage"
-                    />
-                </q-card-section>
+    <div id="app">
+        <div class="col q-pa-md q-mx-xl" align="center">
+            <q-input
+                class="col"
+                v-model="search"
+                debounce="1000"
+                filled
+                placeholder="Search"
+                hint="Debouncing 1000ms"
+            >
+                <template v-slot:append>
+                    <q-icon name="fas fa-search" />
+                </template>
+            </q-input>
 
-                <q-card-section class="q-pt-xs">
-                    <div class="text-overline">{{ item.author }}</div>
-                        <div class="text-h6 q-mt-sm q-mb-xs">
-                            <a :href="item.url" target="_blank" class="text-red-4 link" style="text-decoration: none">{{ item.title }}</a>
-                        </div>
-                    <div class="text-caption text-grey">{{ item.description }}</div>
+            <q-card class="my-card q-my-sm" flat bordered v-for="item in data" :key="item.id" style="max-width: 60%">
+                <q-card-section horizontal>
+                    <q-card-section class="col-5 flex flex-center" v-if="typeof item.urlToImage === 'string'">
+                        <q-img
+                            class="rounded-borders"
+                            :src="item.urlToImage"
+                            height="200px"
+                            width="250px"
+                        />
+                    </q-card-section>
+
+                    <q-card-section class="q-pt-xs">
+                        <div class="text-overline">{{ item.author }}</div>
+                            <div class="text-h6 q-mt-sm q-mb-xs">
+                                <a :href="item.url" target="_blank" class="text-red-4 link" style="text-decoration: none">{{ item.title }}</a>
+                            </div>
+                        <div class="text-caption text-grey">{{ item.description }}</div>
+                    </q-card-section>
                 </q-card-section>
-            </q-card-section>
-        </q-card>
+            </q-card>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -31,7 +46,8 @@ export default {
   name: 'App',
   data () {
     return {
-      data: null
+      data: null,
+      search: ''
     }
   },
   mounted () {
