@@ -6,8 +6,8 @@
                 v-model="search"
                 debounce="1000"
                 filled
-                placeholder="Search"
-                hint="Debouncing 1000ms"
+                placeholder="Search keyword"
+                @input="searchKeyword"
             >
                 <template v-slot:append>
                     <q-icon name="fas fa-search" />
@@ -28,7 +28,7 @@
                     <q-card-section class="q-pt-xs">
                         <div class="text-overline">{{ item.author }}</div>
                             <div class="text-h6 q-mt-sm q-mb-xs">
-                                <a :href="item.url" target="_blank" class="text-red-4 link" style="text-decoration: none">{{ item.title }}</a>
+                                <a :href="item.url" target="_blank" class="text-primary link" style="text-decoration: none">{{ item.title }}</a>
                             </div>
                         <div class="text-caption text-grey">{{ item.description }}</div>
                     </q-card-section>
@@ -48,6 +48,14 @@ export default {
     return {
       data: null,
       search: ''
+    }
+  },
+  methods: {
+    searchKeyword () {
+      const key = apiKey
+      let search = this.search
+
+      axios.get(`https://newsapi.org/v2/everything?q=${search}&apiKey=${key}`).then(response => this.data = response.data.articles) 
     }
   },
   mounted () {
