@@ -45,11 +45,11 @@
                                 <q-knob
                                     show-value
                                     class="text-light-blue q-ma-md"
-                                    :value="calculateSentiment(item)"
+                                    :value="sentimentAbsVal(item)"
                                     size="60px"
-                                    color="light-blue"
+                                    :color="sentimentColor(item)"
                                 >
-                                    {{ calculateSentiment(item) }}%
+                                    {{ calculateSentiment(item) }}
                                 </q-knob>
                             </q-card-section>
                         </q-card-section>
@@ -84,10 +84,34 @@ export default {
     },
     calculateSentiment (item) {
       if (item.content !== null) {
-        console.log(item.content)
-        console.log(sentiment.analyze(item.content))
-        return ((sentiment.analyze(item.content).comparative).toFixed(2) * 100)
+        let score = (sentiment.analyze(item.content).comparative).toFixed(2) * 100
+        if (score === 0) {
+            return 'Neutral'
+        } else {
+            return score + '%'
+        }
+      } else if (item.content === undefined) {
+          return 'N/A'
       }
+    },
+    sentimentAbsVal (item) {
+        if (item.content !== null) {
+            return Math.abs((sentiment.analyze(item.content).comparative).toFixed(2) * 100)
+        } else if (item.content === undefined) {
+            return 'N/A'
+        }
+    },
+    sentimentColor (item) {
+        if (item.content !== null) {
+            let sign = Math.sign((sentiment.analyze(item.content).comparative).toFixed(2) * 100)
+            if (sign === 1) {
+                return 'light-blue'
+            } else if (sign === 0) {
+                return 'grey-8'
+            } else if (sign === -1) {
+                return 'red-8'
+            }
+        }
     }
   },
   mounted () {
