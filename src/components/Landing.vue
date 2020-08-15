@@ -65,7 +65,7 @@ const Sentiment = require('sentiment')
 const sentiment = new Sentiment()
 
 export default {
-  name: 'App',
+  name: 'Landing',
   data () {
     return {
       data: null,
@@ -115,7 +115,10 @@ export default {
   mounted () {
     const key = apiKey
 
-    axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`).then(response => this.data = response.data.articles)
+    axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`).then(response => {
+        this.data = response.data.articles
+        console.log(response.data)
+    })
   }
 }
 </script>
