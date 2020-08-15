@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h4>Selected Publication</h4>
         {{ selectedSource }}
     </div>
 </template>

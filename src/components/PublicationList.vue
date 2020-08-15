@@ -1,18 +1,38 @@
 <template>
     <div>
-        <h4>Publication list</h4>
+        <h4>Publications</h4>
 
         <q-card class="my-card q-my-sm" flat bordered v-for="source in data" :key="source.id" style="max-width: 60%">
-            <q-card-section class="q-pt-xs">
-                <div class="text-h6 q-mt-sm q-mb-xs">
-                    <a :href="source.url" target="_blank" class="text-primary link" style="text-decoration: none">{{ source.name }}</a>
+            <q-card-section>
+                <q-btn
+                fab
+                color="primary"
+                icon="score"
+                class="absolute"
+                style="top: 0; right: 12px; transform: translateY(-50%);"
+                />
+
+                <div class="row no-wrap items-center">
+                    <div class="col text-h6 ellipsis">
+                        <a :href="source.url" target="_blank" class="text-primary link" style="text-decoration: none">{{ source.name }}</a>
+                    </div>
                 </div>
-                <div class="text-caption text-grey">{{ source.description }}</div>
             </q-card-section>
 
-            <div class="col-4">
-                <q-btn :to="`/publication/${source.id}`" label="SelectedPublication" />
-            </div>
+            <q-card-section class="q-pt-none">
+                <div class="text-subtitle1">
+                    {{ source.description }}
+                </div>
+                <div class="text-caption text-grey">
+                    {{ source.category.toUpperCase() }}
+                </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions>
+                <q-btn :to="`/publication/${source.id}`" label="View Profile" />
+            </q-card-actions>
 
                 <!--
                 <q-card-section horizontal class="q-pa-xl">
@@ -37,7 +57,7 @@
                     </q-card>                 
                 </q-card-section>
                 -->
-            </q-card>
+        </q-card>
     </div>
 </template>
 
